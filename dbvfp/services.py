@@ -1,10 +1,22 @@
 import win32com.client
 import pythoncom
 
+import os
+from dotenv import load_dotenv
+
+# Cargar variables desde el archivo .env
+load_dotenv(override=True)
+
+# Leer variables de entorno
+provider = os.getenv("PROVIDER")
+data_source = os.getenv("DATA_SOURCE")
+exclusive = os.getenv("EXCLUSIVE")
+
+# Construir la cadena de conexión
 CONNECTION_STRING = (
-    r"Provider=VFPOLEDB.1;"
-    r"Data Source=Z:\SoporteTi\sisclin\DATA;"
-    r"Exclusive=No;"
+    fr"Provider={provider};"
+    fr"Data Source={data_source};"
+    fr"Exclusive={exclusive};"
 )
 
 
