@@ -19,6 +19,8 @@ CONNECTION_STRING = (
     fr"Exclusive={exclusive};"
 )
 
+print(CONNECTION_STRING)
+
 
 def open_connection():
     try:

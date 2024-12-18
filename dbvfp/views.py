@@ -72,7 +72,7 @@ def get_admisiones_seguros(request):
         f"{FACTURAS}.num_fac as invoice_number, "
         f"{FACTURAS}.fec_fac as invoice_date, "
         f"{FACTURAS}.uc_sis as biller, "
-        # f"{DEVOLUCIONES}.fh_dev, "
+        f"{DEVOLUCIONES}.fh_dev, "
         f"{CIAS}.nom_cia as insurer_name "
         f"FROM {ADMISIONES} "
         f"LEFT JOIN {MEDICOS} ON {ADMISIONES}.cod_ser = {MEDICOS}.cod_ser "
@@ -83,7 +83,7 @@ def get_admisiones_seguros(request):
             ADMISIONES}.num_doc = {DEVOLUCIONES}.num_doc "
         f"LEFT JOIN {FACTURAS} ON {ADMISIONES}.num_doc = {FACTURAS}.num_doc "
         f"WHERE "
-        f"fec_doc BETWEEN ctod('{starDate}') AND ctod('{
+        f"{ADMISIONES}.fec_doc BETWEEN ctod('{starDate}') AND ctod('{
             endDate}') "
         f"AND {CIAS}.nom_cia <> 'PARTICULAR' "
         f"AND {PACIENTES}.nh_pac IS NOT NULL AND {PACIENTES}.nh_pac <> '' "
@@ -251,7 +251,8 @@ def get_devoluciones(request):
         return JsonResponse({'error': 'starDate and endDate are required'}, status=400)
 
     query = (
-        f"SELECT TOP 10 * FROM {DEVOLUCIONES} "
+        f"SELECT * FROM {DEVOLUCIONES} where fh_dev BETWEEN ctod('{starDate}') AND ctod('{
+            endDate}') "
         f"ORDER BY num_doc ASC;"
     )
 
